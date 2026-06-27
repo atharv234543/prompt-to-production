@@ -1,6 +1,6 @@
 """
 UC-0A — Complaint Classifier
-Starter file. Build this using the RICE → agents.md → skills.md → CRAFT workflow.
+Implemented based on the R.I.C.E. rules defined in agents.md and the skill specifications in skills.md.
 """
 import argparse
 import csv
@@ -8,6 +8,7 @@ import csv
 def classify_complaint(row: dict) -> dict:
     """
     Classify a single complaint row.
+    Implemented based on the R.I.C.E. enforcement rules in agents.md and the classify_complaint skill in skills.md.
     Returns: dict with keys: complaint_id, category, priority, reason, flag
     """
     description = row.get("description", "").strip()
@@ -115,6 +116,7 @@ def classify_complaint(row: dict) -> dict:
 def batch_classify(input_path: str, output_path: str):
     """
     Read input CSV, classify each row, write results CSV.
+    Implemented based on the batch_classify skill defined in skills.md.
     """
     results = []
     try:
