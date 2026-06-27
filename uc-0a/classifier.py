@@ -27,13 +27,13 @@ def classify_complaint(row: dict) -> dict:
     # Allowed categories mapping
     category_mapping = {
         "Pothole": ["pothole"],
-        "Flooding": ["flood", "waterlog", "inundat"],
-        "Streetlight": ["streetlight", "street light", "lamp", "light"],
+        "Flooding": ["flood", "waterlog", "inundat", "rainwater", "rain water"],
+        "Streetlight": ["streetlight", "street light", "lamp", "light", "unlit", "darkness"],
         "Waste": ["garbage", "waste", "trash", "dump", "dead animal", "litter", "debris"],
-        "Noise": ["noise", "music", "loudspeaker", "sound"],
-        "Road Damage": ["road surface", "footpath", "pavement", "tiles", "cracked", "sinking"],
+        "Noise": ["noise", "music", "loudspeaker", "sound", "band playing", "amplifiers", "drilling"],
+        "Road Damage": ["road surface", "footpath", "pavement", "tiles", "cracked", "sinking", "subsid", "buckled", "crater", "paving", "collapsed", "collapse"],
         "Heritage Damage": ["heritage", "historic", "monument", "ancient"],
-        "Heat Hazard": ["heat", "hot", "temperature", "sunstroke", "heatwave"],
+        "Heat Hazard": ["heat", "hot", "temperature", "sunstroke", "heatwave", "melting", "bubbling", "burns"],
         "Drain Blockage": ["drain", "manhole", "sewer", "gutter", "catch basin"]
     }
     
@@ -49,6 +49,11 @@ def classify_complaint(row: dict) -> dict:
                     matched_keywords[cat] = kw
                 break
                 
+    # Deduplicate Pothole and Road Damage (Pothole takes precedence)
+    if "Pothole" in matched_categories and "Road Damage" in matched_categories:
+        matched_categories.remove("Road Damage")
+        matched_keywords.pop("Road Damage", None)
+        
     flag = ""
     category = "Other"
     keyword = ""
